@@ -12,10 +12,11 @@ import java.util.Set;
 
 public class Checker {
 	private final List<PaperInfo> paperInfos;
-	
+	private final double maxdist;
 
-	public Checker(String file) {
+	public Checker(String file, double d) {
 		this.paperInfos = read(file);
+		this.maxdist = d;
 	}
 
 	private List<PaperInfo> read(String file) {
@@ -81,9 +82,15 @@ public class Checker {
 			if (!crs.containsKey(p1.getAuthor())) {
 				crs.put(p1.getAuthor(), new ArrayList<CompareResult>());
 			}
-			for (int j = i + 1; j < paperInfos.size(); j++) {
+			for (int j = 0; j < paperInfos.size(); j++) {
+				if(i == j) continue;
+				
 				PaperInfo p2 = paperInfos.get(j);
+				if(!p2.sameSpec(p1)){
+					continue;
+				}
 				double s = ls.getStringDistance(p1.getTitle2(), p2.getTitle2());
+				if(s > maxdist) continue;
 				
 				CompareResult cr = new CompareResult(p1, p2, s);
 				//cr.display();

@@ -52,6 +52,11 @@ public class PaperInfo {
 	public String getTitle2() {
 		return title2;
 	}
+
+	public boolean sameSpec(PaperInfo p1) {
+		// TODO Auto-generated method stub
+		return this.author.getClzNo().equals(p1.getAuthor().getClzNo());
+	}
 	
 	
 	
